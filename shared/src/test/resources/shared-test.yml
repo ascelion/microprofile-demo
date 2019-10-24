@@ -1,0 +1,5 @@
+config_ordinal: 150
+
+database:
+  driverClassName: org.h2.Driver
+  jdbcUrl: jdbc:h2:mem:.

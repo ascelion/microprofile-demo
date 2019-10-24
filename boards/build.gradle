@@ -1,0 +1,11 @@
+
+apply plugin: 'application'
+
+dependencies {
+	implementation project( ':engine' )
+	implementation project( ':shared' )
+	implementation project( ':boot' )
+
+	compileOnly 'jakarta.persistence:jakarta.persistence-api'
+}
+

@@ -1,0 +1,7 @@
+
+apply plugin: 'application'
+
+dependencies {
+	implementation project( ':shared' )
+	implementation project( ':boot' )
+}

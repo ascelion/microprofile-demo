@@ -1,0 +1,6 @@
+
+jersey:
+  tracing:
+    type: ALL
+    threshold: VERBOSE
+

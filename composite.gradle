@@ -1,0 +1,21 @@
+
+def compBuild( String dir, String mod, String path ) {
+	if( file(dir).exists() ) {
+		includeBuild( dir ) {
+			dependencySubstitution {
+				substitute module( mod ) with project(path)
+			}
+		}
+	}
+}
+
+//compBuild '../cdi-utils', 'ascelion.public:cdi-utils', ':'
+
+//compBuild '../flywaydb-ext', 'ascelion.flywaydb:flywaydb-ext-api', ':flywaydb-ext-api'
+//compBuild '../flywaydb-ext', 'ascelion.flywaydb:flywaydb-ext-cdi', ':flywaydb-ext-cdi'
+//compBuild '../flywaydb-ext', 'ascelion.flywaydb:flywaydb-ext-util6', ':flywaydb-ext-util6'
+
+//compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-api', ':mp-config-ext-api'
+//compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-cdi', ':mp-config-ext-cdi'
+//compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-yml', ':mp-config-ext-yml'
+

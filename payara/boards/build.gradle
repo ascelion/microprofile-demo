@@ -1,0 +1,47 @@
+
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+configurations {
+	implementation {
+		exclude group: rootProject.group, module: 'boot'
+	}
+}
+
+dependencies {
+	implementation project( ':boards' )
+}
+
+configurations {
+	payara
+}
+
+dependencies {
+	payara 'fish.payara.extras:payara-micro:5.193.1'
+}
+
+task run( type: Exec ) {
+	dependsOn war
+
+	executable 'java'
+
+	args '-ea'
+	args '-Djava.net.preferIPv4Stack=true'
+	args '-jar', configurations.payara.asPath
+	args '--nested'
+	args '--showservletmappings'
+	args '--contextroot', '/'
+	args '--deploy', war.archivePath
+}
+
+eclipse {
+	wtp {
+		component {
+			contextPath = '/'
+		}
+		facet {
+			facet name: 'jst.web', version: '4.0'
+			facet name: 'jst.java', version: '1.8'
+		}
+	}
+}

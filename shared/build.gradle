@@ -1,0 +1,31 @@
+
+apply plugin: 'java-library'
+
+dependencies {
+	compileOnly 'jakarta.enterprise:jakarta.enterprise.cdi-api'
+	compileOnly 'jakarta.annotation:jakarta.annotation-api'
+	compileOnly 'jakarta.persistence:jakarta.persistence-api'
+
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+	api 'org.apache.deltaspike.modules:deltaspike-data-module-api'
+	runtimeOnly 'org.apache.deltaspike.modules:deltaspike-data-module-impl'
+
+	compileOnly 'org.glassfish.jersey.core:jersey-server'
+	
+	api 'ascelion.flywaydb:flywaydb-ext-api'
+	runtimeOnly 'ascelion.flywaydb:flywaydb-ext-cdi'
+	runtimeOnly 'ascelion.flywaydb:flywaydb-ext-util6'
+
+	runtimeOnly 'ascelion.mp-config:mp-config-ext-cdi'
+	runtimeOnly 'ascelion.mp-config:mp-config-ext-yml'
+
+	implementation 'com.zaxxer:HikariCP'
+	implementation 'org.flywaydb:flyway-core'
+
+	testImplementation 'ascelion.mp-config:mp-config-ext-cdi'
+	testImplementation 'org.jboss.weld:weld-junit4'
+	testImplementation 'io.smallrye:smallrye-config'
+
+	testImplementation 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.5'
+}

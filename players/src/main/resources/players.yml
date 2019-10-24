@@ -1,0 +1,9 @@
+
+## Uncomment if JTA is needed and enable atomikos in build.gradle
+#jpa:
+#  properties:
+#    javax:
+#      persistence:
+#        transactionType: JTA
+#    eclipselink:
+#      target-server: com.atomikos.eclipselink.platform.AtomikosPlatform

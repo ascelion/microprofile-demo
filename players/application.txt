@@ -1,0 +1,6 @@
+FROM openjdk:8
+
+ADD build/distributions/players.tar /opt/players
+
+ENTRYPOINT [ "/opt/players/bin/players" ]
+CMD []

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+	<property name="LOG_PATH" value="${LOG_PATH:-${user.dir}}/build" />
+	<property name="LOG_NAME" value="${LOG_NAME:-${application.name:-boards}}" />
+	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_NAME}.log}" />
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_PATH}/${LOG_FILE}</file>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %-5level [%-40logger{40}] %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+<!--
+ 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+ -->
+ 		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %-5level [%logger{20}] %msg%n</pattern>
+		</encoder>
+	</appender>
+ 
+	<logger name="ascelion" level="ALL" />
+	<logger name="org.glassfish.jersey" level="INFO" />
+	<logger name="com.zaxxer.hikari" level="INFO" />
+	<logger name="com.zaxxer.hikari.HikariConfig" level="DEBUG" />
+	<logger name="io.undertow" level="INFO" />
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+</configuration>

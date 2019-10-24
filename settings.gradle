@@ -1,0 +1,24 @@
+rootProject.name = 'kalah-game'
+
+include ':boot'
+include ':boards'
+include ':engine'
+include ':players'
+include ':shared'
+
+include ':payara:boards'
+include ':payara:players'
+
+def renameChildren( ProjectDescriptor desc ) {
+	desc.children.each { child ->
+
+		child.name = "${child.path.substring(1).replace(':', '-')}"
+
+		renameChildren child
+	}
+}
+
+renameChildren rootProject
+
+apply from: 'composite.gradle'
+

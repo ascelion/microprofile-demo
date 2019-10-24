@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+dependencies {
+	implementation project( ':shared' )
+
+	compileOnly 'jakarta.persistence:jakarta.persistence-api'
+	compileOnly 'jakarta.validation:jakarta.validation-api'
+
+	implementation 'org.slf4j:slf4j-api'
+	runtimeOnly 'ch.qos.logback:logback-classic'
+}
