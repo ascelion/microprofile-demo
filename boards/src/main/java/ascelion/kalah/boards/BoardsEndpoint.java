@@ -11,12 +11,16 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import ascelion.kalah.engine.model.Board;
+import ascelion.kalah.players.PlayersEndpoint;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
+
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @Path("boards")
 @ApplicationScoped
@@ -24,6 +28,9 @@ public class BoardsEndpoint {
 
 	@Inject
 	private BoardsRepository repo;
+	@Inject
+	@RestClient
+	private PlayersEndpoint players;
 
 	@GET
 	public List<Board> getAll() {
@@ -33,6 +40,8 @@ public class BoardsEndpoint {
 	@POST
 	@Consumes(APPLICATION_FORM_URLENCODED)
 	public Board create(@FormParam("userId") UUID userId) {
+		this.players.get(userId);
+
 		final Board board = Board.builder()
 				.southId(userId)
 				.build();
@@ -43,13 +52,15 @@ public class BoardsEndpoint {
 	@POST
 	@Path("{boardId}")
 	@Consumes(APPLICATION_FORM_URLENCODED)
-	public Board join(@FormParam("userId") UUID userId) {
+	public Board join(@PathParam("boardId") UUID boardId, @FormParam("userId") UUID userId) {
 		final Board board = this.repo.findOptionalBy(userId)
 				.orElseThrow(() -> new EntityNotFoundException());
 
 		if (board.getNorthId() != null) {
 			throw new WebApplicationException(Response.Status.CONFLICT);
 		}
+
+		this.players.get(userId);
 
 		board.setNorthId(userId);
 

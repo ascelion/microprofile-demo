@@ -1,6 +1,6 @@
 FROM openjdk:8
 
-ADD build/distributions/players.tar /opt/players
+ADD build/distributions/boards.tar /opt/boards
 
-ENTRYPOINT [ "/opt/players/bin/players" ]
+ENTRYPOINT [ "/opt/boards/bin/boards" ]
 CMD []

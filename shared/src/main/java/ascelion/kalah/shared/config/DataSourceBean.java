@@ -1,5 +1,6 @@
 package ascelion.kalah.shared.config;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.sql.DataSource;
@@ -14,10 +15,11 @@ import com.zaxxer.hikari.HikariDataSource;
 @ConfigPrefix("database")
 class DataSourceBean {
 	private final HikariConfig hikari = new HikariConfig();
+	private DataSource datasource;
 
 	@Produces
 	DataSource datasource() {
-		return new HikariDataSource(this.hikari);
+		return this.datasource;
 	}
 
 	public void setCatalog(@ConfigValue(required = false) String catalog) {
@@ -94,5 +96,10 @@ class DataSourceBean {
 
 	public void setRegisterMbeans(@ConfigValue(required = false) boolean register) {
 		this.hikari.setRegisterMbeans(register);
+	}
+
+	@PostConstruct
+	private void postConstruct() {
+		this.datasource = new HikariDataSource(this.hikari);
 	}
 }

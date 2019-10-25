@@ -21,6 +21,7 @@ import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.DeploymentManager;
 import io.undertow.servlet.api.ServletContainerInitializerInfo;
 import io.undertow.servlet.api.ServletInfo;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +30,11 @@ import org.slf4j.LoggerFactory;
 public class UndertowBean {
 	static private final Logger LOG = LoggerFactory.getLogger(UndertowBean.class);
 
+	@Setter(onParam_ = @ConfigValue(required = false))
 	private String host = "localhost";
+	@Setter(onParam_ = @ConfigValue(required = false))
 	private int port = 8080;
+	@Setter(onParam_ = @ConfigValue(required = false))
 	private String contextPath = "/";
 
 	@ConfigValue("${application.name:-ROOT}")
@@ -43,18 +47,6 @@ public class UndertowBean {
 
 	@Inject
 	private Instance<ServletInfo> sisInstance;
-
-	public void setHost(@ConfigValue(required = false) String host) {
-		this.host = host;
-	}
-
-	public void setPort(@ConfigValue(required = false) int port) {
-		this.port = port;
-	}
-
-	public void setContextPath(@ConfigValue(required = false) String contextPath) {
-		this.contextPath = contextPath;
-	}
 
 	void init(
 	//@formatter:off

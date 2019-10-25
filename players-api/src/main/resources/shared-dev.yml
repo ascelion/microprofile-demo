@@ -1,0 +1,7 @@
+
+config_ordinal: 125
+
+endpoints:
+  players:
+    host: localhost
+    port: 28080

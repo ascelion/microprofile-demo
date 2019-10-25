@@ -1,55 +1,55 @@
 version: "3.1"
 
 services:
-  players-db:
+  boards-db:
     build:
       context: .
       dockerfile: database.txt
-    image: players-db:latest
+    image: boards-db:latest
     environment:
       - LANG=en_GB.UTF-8
-      - POSTGRES_USER=players
-      - POSTGRES_PASSWORD=players
-      - POSTGRES_DB=players
+      - POSTGRES_USER=boards
+      - POSTGRES_PASSWORD=boards
+      - POSTGRES_DB=boards
     restart: always
     deploy:
       restart_policy:
         condition: any
-    container_name: players-db
+    container_name: boards-db
     volumes:
-      - players-db:/var/lib/postgresql/data/
+      - boards-db:/var/lib/postgresql/data/
     networks:
       - net0
     ports:
-      - "25432:5432"
+      - "15432:5432"
 
-  players:
+  boards:
     build:
       context: .
       dockerfile: application.txt
-    image: players:latest
+    image: boards:latest
     environment:
       - LANG=en_GB.UTF-8
       - SERVER_HOST=0.0.0.0
-      - DATABASE_HOST=players-db
+      - DATABASE_HOST=boards-db
       - DATABASE_PORT=5432
-      - DATABASE_NAME=players
-      - DATABASE_USER=players
-      - DATABASE_PASS=players
+      - DATABASE_NAME=boards
+      - DATABASE_USER=boards
+      - DATABASE_PASS=boards
     restart: always
     deploy:
       restart_policy:
         condition: any
-    container_name: players
+    container_name: boards
     depends_on:
-      - players-db
+      - boards-db
     networks:
       - net0
     ports:
-      - "28080:8080"
+      - "18080:8080"
 
 volumes:
-  players-db:
+  boards-db:
 
 networks:
   net0:

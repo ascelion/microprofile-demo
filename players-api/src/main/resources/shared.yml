@@ -1,0 +1,6 @@
+
+endpoints:
+  players:
+    host: players
+    port: 8080
+    /mp-rest/uri: http://${endpoints.players.host}:${endpoints.players.port}/rest/players

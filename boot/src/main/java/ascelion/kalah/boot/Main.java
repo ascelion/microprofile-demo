@@ -1,5 +1,7 @@
 package ascelion.kalah.boot;
 
+import java.io.File;
+
 import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
@@ -12,16 +14,21 @@ import javax.interceptor.Interceptor;
 import ascelion.kalah.shared.utils.SLF4JHandler;
 import ascelion.microprofile.config.ConfigValue;
 
+import static java.util.Arrays.stream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 public class Main {
 	static {
-//		stream(System.getProperty("java.class.path")
-//				.split(File.pathSeparator))
-//						.sorted()
-//						.forEach(System.out::println);
+		if (Boolean.getBoolean("show.class.path")) {
+			stream(System.getProperty("java.class.path")
+					.split(File.pathSeparator))
+							.sorted()
+							.forEach(System.out::println);
+		}
+
 		SLF4JHandler.install();
 	}
 

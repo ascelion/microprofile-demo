@@ -2,6 +2,7 @@
 apply plugin: 'application'
 
 dependencies {
+	implementation project( ':players-api' )
 	implementation project( ':shared' )
 	implementation project( ':boot' )
 }

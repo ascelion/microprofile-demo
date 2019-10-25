@@ -16,6 +16,7 @@ import static java.util.Optional.ofNullable;
 import io.undertow.servlet.api.ServletInfo;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.servlet.ServletContainer;
+import org.glassfish.jersey.servlet.ServletProperties;
 
 @Dependent
 public class JerseyBean {
@@ -48,6 +49,8 @@ public class JerseyBean {
 
 				si.addMapping(path + "/*");
 			}
+
+			si.addInitParam(ServletProperties.JAXRS_APPLICATION_CLASS, bean.getBeanClass().getName());
 		}
 
 		if (si.getMappings().isEmpty()) {

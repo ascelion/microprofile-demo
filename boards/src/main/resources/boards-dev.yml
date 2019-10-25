@@ -1,5 +1,8 @@
 
 config_ordinal: 125
 
+server:
+  port: 18080
+
 database:
   port: 15432
