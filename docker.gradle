@@ -1,0 +1,76 @@
+
+final def destination    = file "$buildDir/libs"
+final def jdbcPort       = docker.configuration.portBase + 5432
+
+
+docker {
+	name = 'kalah'
+	tagName = 'latest'
+	repository  = project.hasProperty( 'docker.repository' ) ? project.ext['docker.repository'] + "/$name/" : ''
+
+	configuration {
+		publish     = isRelease ? false : booleanProperty( 'ublish-services', false )
+		application = project.name
+
+		hasDatabase = true
+
+		portRange   = integerProperty( 'port-range', 10 )
+	}
+}
+
+task startDB(type: Exec) {
+	onlyIf { docker.configuration.hasDatabase }
+
+	executable 'docker'
+
+	args 'run', '--name', "$project.name-db-dev"
+	args '-d', '--rm'
+	args '-e', "POSTGRES_USER=$project.name"
+	args '-e', "POSTGRES_PASSWORD=$project.name"
+	args '-e', "POSTGRES_DB=$project.name"
+	args '-p', "$jdbcPort:5432"
+	args 'postgres:11.5'
+}
+
+task stopDB(type: Exec) {
+	onlyIf { docker.configuration.hasDatabase }
+
+	executable 'docker'
+
+	ignoreExitValue true
+
+	args 'stop', "$project.name-db-dev"
+}
+
+docker {
+	outputDirectory destination
+	templates rootProject.fileTree( 'docker' )
+}
+
+task dockerBaseJars( type: Copy ) {
+	dependsOn assemble
+
+	from tarTree( "$buildDir/distributions/${project.name}.tar" )
+	into destination
+	exclude "bin/*.bat"
+	exclude "lib/$rootProject.name-*.jar"
+}
+
+task dockerBaseDist( type: Copy ) {
+	dependsOn assemble
+
+	from tarTree( "$buildDir/distributions/${project.name}.tar" )
+	into "$destination/lib1"
+	include "lib/$rootProject.name-*.jar"
+
+	includeEmptyDirs = false
+
+	eachFile {
+		path = name
+	}
+}
+
+dockerFiles {
+	dependsOn dockerBaseJars, dockerBaseDist
+}
+

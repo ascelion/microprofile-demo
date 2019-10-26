@@ -1,0 +1,71 @@
+version: "3.1"
+
+services:
+  [=application]_db:
+    build:
+      context: .
+      dockerfile: database.txt
+    image: [=repository][=application]_db:[=tagName]
+    container_name: [=name]_[=application]_db
+    volumes:
+      - [=application]_db:/var/lib/postgresql/data/
+    environment:
+      - LANG=en_GB.UTF-8
+      - POSTGRES_USER=[=application]
+      - POSTGRES_PASSWORD=[=application]
+      - POSTGRES_DB=[=application]
+    restart: always
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+    networks:
+      - [=network]
+[#if publish]
+    ports:
+      - "[=portBase + 5432]:5432"
+[/#if]
+
+  [=application?replace('-', '_')]:
+    build:
+      context: .
+      dockerfile: application.txt
+    image: [=repository][=application?replace('-', '_')]:[=tagName]
+[#if !scalable]
+    container_name: [=name]_[=application?replace('-', '_')]
+[/#if]
+    environment:
+      - LANG=en_GB.UTF-8
+      - SERVER_HOST=0.0.0.0
+      - DATABASE_HOST=[=application]_db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=[=application]
+      - DATABASE_USER=[=application]
+      - DATABASE_PASS=[=application]
+    restart: always
+    deploy:
+[#if global??]
+      mode: global
+[/#if]
+      restart_policy:
+        condition: any
+        delay: 5s
+    networks:
+      - [=network]
+[#if publish]
+    ports:
+[#if scalable && portRange > 1]
+      - "[=portBase + 8080]-[=portBase + 8080 + portRange - 1]:8080"
+[#else]
+      - "[=portBase + 8080]:8080"
+[/#if]
+[/#if]
+    depends_on:
+      - [=application]_db
+
+volumes:
+  [=application]_db:
+
+networks:
+  [=network]:
+

@@ -1,3 +1,10 @@
+apply plugin: 'docker'
+
+docker {
+	configuration {
+		portBase = 10000
+	}
+}
 
 apply plugin: 'application'
 
@@ -6,6 +13,4 @@ dependencies {
 	implementation project( ':engine' )
 	implementation project( ':shared' )
 	implementation project( ':boot' )
-
-	implementation 'org.glassfish.jersey.ext.microprofile:jersey-mp-rest-client'
 }

@@ -1,0 +1,22 @@
+[#assign APPLICATION][=application?upper_case?replace('-', '_')][/#assign]
+
+FROM openjdk:8
+
+ENV LOG_PATH /var/log
+
+ENV [=APPLICATION]_OPTS $[=APPLICATION]_OPTS -DAPP_NAME=[=application]
+ENV [=APPLICATION]_OPTS $[=APPLICATION]_OPTS -DLOG_NAME=[=application]
+ENV [=APPLICATION]_OPTS $[=APPLICATION]_OPTS -DLOG_PATH=$LOG_PATH
+
+RUN mkdir -p $LOG_PATH
+
+COPY bin/[=application] /usr/share/[=application]/bin/
+COPY lib/*.jar /usr/share/[=application]/lib/
+COPY lib1/*.jar /usr/share/[=application]/lib/
+
+RUN ln -sf /usr/share/[=application]/bin/[=application] /bin/run-[=application]-service
+
+COPY *.jar /usr/share/[=application]/lib/
+
+ENTRYPOINT [ "/bin/run-[=application]-service" ]
+CMD []

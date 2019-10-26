@@ -1,0 +1,21 @@
+FROM payara/micro:latest
+
+ENV LOG_PATH /var/log
+ENV APP_NAME [=application]
+ENV LOG_NAME [=application]
+ENV LOG_PATH $LOG_PATH
+
+RUN mkdir -p $LOG_PATH
+
+ADD build/libs/payara-[=application].war /opt/payara
+
+ENTRYPOINT java \
+	-XX:+UseContainerSupport \
+	-XX:MaxRAMPercentage=90.0 \
+	-jar /opt/payara/payara-micro.jar \
+	--nested \
+	--nocluster \
+	--showservletmappings \
+	--contextroot / \
+	--deploy /opt/payara/payara-[=application].war
+

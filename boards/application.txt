@@ -1,6 +1,0 @@
-FROM openjdk:8
-
-ADD build/distributions/boards.tar /opt/boards
-
-ENTRYPOINT [ "/opt/boards/bin/boards" ]
-CMD []

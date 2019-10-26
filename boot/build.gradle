@@ -33,6 +33,7 @@ dependencies {
 	runtimeOnly 'ascelion.mp-config:mp-config-ext-cdi'
 	runtimeOnly 'ascelion.mp-config:mp-config-ext-yml'
 
+	runtimeOnly 'org.glassfish.jersey.ext.microprofile:jersey-mp-rest-client'
 	runtimeOnly 'io.smallrye:smallrye-config'
 
 	runtimeOnly 'org.jboss.weld.se:weld-se-core'

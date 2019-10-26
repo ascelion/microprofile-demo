@@ -7,8 +7,8 @@ include ':players'
 include ':players-api'
 include ':shared'
 
-//include ':payara:boards'
-//include ':payara:players'
+include ':payara:boards'
+include ':payara:players'
 
 def renameChildren( ProjectDescriptor desc ) {
 	desc.children.each { child ->

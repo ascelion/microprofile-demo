@@ -1,3 +1,10 @@
+apply plugin: 'docker'
+
+docker {
+	configuration {
+		portBase = 20000
+	}
+}
 
 apply plugin: 'application'
 
