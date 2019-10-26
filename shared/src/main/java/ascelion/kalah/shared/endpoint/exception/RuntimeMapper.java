@@ -10,9 +10,9 @@ import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
 @Provider
 @ApplicationScoped
-public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException> {
+public class RuntimeMapper implements ExceptionMapper<RuntimeException> {
 	@Inject
-	private GenericExceptionMapper gem;
+	private GenericMapper gem;
 
 	@Override
 	public Response toResponse(RuntimeException exception) {

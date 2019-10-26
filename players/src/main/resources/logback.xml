@@ -21,13 +21,13 @@
 		</encoder>
 	</appender>
  
-	<logger name="ascelion" level="ALL" />
+	<logger name="ascelion" level="INFO" />
 
-	<logger name="org.hibernate" level="ALL" />
+	<logger name="org.hibernate" level="INFO" />
 	<logger name="org.glassfish.jersey" level="INFO" />
 	<logger name="com.zaxxer.hikari" level="INFO" />
 	<logger name="com.zaxxer.hikari.HikariConfig" level="DEBUG" />
-	<logger name="io.undertow" level="INFO" />
+	<logger name="io.helidon" level="INFO" />
 
 	<root level="INFO">
 		<appender-ref ref="FILE" />

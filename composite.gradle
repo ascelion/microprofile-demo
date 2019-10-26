@@ -15,8 +15,7 @@ def compBuild( String dir, String mod, String path ) {
 //compBuild '../flywaydb-ext', 'ascelion.flywaydb:flywaydb-ext-cdi', ':flywaydb-ext-cdi'
 //compBuild '../flywaydb-ext', 'ascelion.flywaydb:flywaydb-ext-util6', ':flywaydb-ext-util6'
 
-//compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-api', ':mp-config-ext-api'
-//compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-cdi', ':mp-config-ext-cdi'
-//compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-util', ':mp-config-ext-util'
-//compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-yml', ':mp-config-ext-yml'
-
+compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-api', ':mp-config-ext-api'
+compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-cdi', ':mp-config-ext-cdi'
+compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-util', ':mp-config-ext-util'
+compBuild '../mp-config-ext', 'ascelion.mp-config:mp-config-ext-yml', ':mp-config-ext-yml'

@@ -25,7 +25,6 @@ import static java.util.Optional.ofNullable;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -55,8 +54,7 @@ public class Board extends AbstractEntity<Board> {
 	@NotNull
 	@Column(name = "south_id", nullable = false)
 	private UUID southId;
-	@Setter
-	@Column(name = "north_id", nullable = false)
+	@Column(name = "north_id")
 	private UUID northId;
 
 	@Getter
@@ -70,10 +68,22 @@ public class Board extends AbstractEntity<Board> {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "houses",
-			uniqueConstraints = @UniqueConstraint(name = "house_unique_ix", columnNames = { "game_id", "index" }),
-			joinColumns = @JoinColumn(name = "game_id"))
+			uniqueConstraints = @UniqueConstraint(name = "house_unique_ix", columnNames = { "board_id", "index" }),
+			joinColumns = @JoinColumn(name = "board_id"))
 	@OrderBy("index")
 	private List<House> houses;
+
+	public void start(UUID northId) {
+		if (isStarted()) {
+			throw new IllegalStateException("Game already started");
+		}
+		if (isEnded()) {
+			throw new IllegalStateException("Game ended");
+		}
+
+		this.northId = northId;
+		this.currentPlayer = PlayerRole.SOUTH_ROLE;
+	}
 
 	/**
 	 * The winner of this game as decided by rules; setting this will also set the <code>ended</code> field.
@@ -88,14 +98,25 @@ public class Board extends AbstractEntity<Board> {
 	 * Switch to the next player.
 	 */
 	public void changePlayer() {
+		if (!isStarted()) {
+			throw new IllegalStateException("Game not started");
+		}
+		if (isEnded()) {
+			throw new IllegalStateException("Game ended");
+		}
+
 		this.currentPlayer = this.currentPlayer.next();
+	}
+
+	public boolean isStarted() {
+		return this.northId != null;
 	}
 
 	/**
 	 * True if the game has ended.
 	 */
 	public boolean isEnded() {
-		return this.currentPlayer == null;
+		return this.northId != null && this.currentPlayer == null;
 	}
 
 	public String getPlayer() {

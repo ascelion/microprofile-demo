@@ -14,6 +14,10 @@ import javax.ws.rs.Produces;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+
 public interface FullEntityEndpoint<V> extends ViewEntityEndpoint<V> {
 
 	@POST
@@ -21,7 +25,7 @@ public interface FullEntityEndpoint<V> extends ViewEntityEndpoint<V> {
 	@Produces(APPLICATION_JSON)
 	@NotNull
 	@Valid
-	V createEntity(@NotNull V view);
+	V createEntity(@NotNull @Valid V view);
 
 	@PUT
 	@Path("{id}")
@@ -29,7 +33,7 @@ public interface FullEntityEndpoint<V> extends ViewEntityEndpoint<V> {
 	@Produces(APPLICATION_JSON)
 	@NotNull
 	@Valid
-	V updateEntity(@NotNull @PathParam("id") UUID id, @NotNull V view);
+	V updateEntity(@Parameter(name = "id", description = "The entity ID.", schema = @Schema(type = SchemaType.STRING)) @PathParam("id") UUID id, @NotNull @Valid V view);
 
 	@PATCH
 	@Path("{id}")
@@ -37,5 +41,5 @@ public interface FullEntityEndpoint<V> extends ViewEntityEndpoint<V> {
 	@Produces(APPLICATION_JSON)
 	@NotNull
 	@Valid
-	V patchEntity(@NotNull @PathParam("id") UUID id, @NotNull V view);
+	V patchEntity(@Parameter(name = "id", description = "The entity ID.", schema = @Schema(type = SchemaType.STRING)) @PathParam("id") UUID id, @NotNull @Valid V view);
 }

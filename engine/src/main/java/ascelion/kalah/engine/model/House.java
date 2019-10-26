@@ -3,6 +3,7 @@ package ascelion.kalah.engine.model;
 import javax.persistence.Embeddable;
 
 import ascelion.kalah.engine.exceptions.HouseEmptyException;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +40,6 @@ public class House {
 	 */
 	public void pickSeed() {
 		if (this.seeds == 0) {
-			// XXX this should never happen in the current implementation
 			throw new IllegalStateException("Picking from empty house");
 		}
 

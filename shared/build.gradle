@@ -21,7 +21,7 @@ dependencies {
 	runtimeOnly 'ascelion.mp-config:mp-config-ext-cdi'
 	runtimeOnly 'ascelion.mp-config:mp-config-ext-yml'
 
-	implementation 'com.zaxxer:HikariCP'
+//	implementation 'com.zaxxer:HikariCP'
 	implementation 'org.flywaydb:flyway-core'
 
 	implementation 'io.leangen.geantyref:geantyref'

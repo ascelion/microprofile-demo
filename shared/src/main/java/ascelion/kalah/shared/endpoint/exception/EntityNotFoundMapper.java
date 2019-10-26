@@ -11,9 +11,9 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 @Provider
 @ApplicationScoped
-public class EntityNotFoundExceptionMapper implements ExceptionMapper<EntityNotFoundException> {
+public class EntityNotFoundMapper implements ExceptionMapper<EntityNotFoundException> {
 	@Inject
-	private GenericExceptionMapper gem;
+	private GenericMapper gem;
 
 	@Override
 	public Response toResponse(EntityNotFoundException exception) {

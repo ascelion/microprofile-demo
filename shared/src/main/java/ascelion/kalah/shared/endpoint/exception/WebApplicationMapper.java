@@ -9,9 +9,9 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 @ApplicationScoped
-public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplicationException> {
+public class WebApplicationMapper implements ExceptionMapper<WebApplicationException> {
 	@Inject
-	private GenericExceptionMapper gem;
+	private GenericMapper gem;
 
 	@Override
 	public Response toResponse(WebApplicationException exception) {

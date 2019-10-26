@@ -1,9 +1,17 @@
 
 database:
-  jdbcUrl: jdbc:postgresql://${database.host}:${database.port}/${database.name}
-  driverClassName: org.postgresql.Driver
   name: ${application.name}
   host: localhost
   port: 5432
   username: ${application.name}
   password: ${application.name}
+
+javax.sql.DataSource:
+  default:
+    dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+    dataSource:
+      serverName: ${database.host}
+      portNumber: ${database.port}
+      databaseName: ${database.name}
+      user: ${database.username}
+      password: ${database.password}

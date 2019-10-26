@@ -12,9 +12,9 @@ import ascelion.kalah.shared.client.RestClientException;
 
 @Provider
 @ApplicationScoped
-public class RestClientExceptionMapper implements ExceptionMapper<RestClientException> {
+public class RestClientMapper implements ExceptionMapper<RestClientException> {
 	@Inject
-	private GenericExceptionMapper gem;
+	private GenericMapper gem;
 
 	@Override
 	public Response toResponse(RestClientException exception) {

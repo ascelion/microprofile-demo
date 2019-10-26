@@ -37,6 +37,7 @@ services:
     environment:
       - LANG=en_GB.UTF-8
       - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8080
       - DATABASE_HOST=[=application]_db
       - DATABASE_PORT=5432
       - DATABASE_NAME=[=application]

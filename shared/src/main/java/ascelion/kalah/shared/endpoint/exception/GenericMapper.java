@@ -20,7 +20,7 @@ import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
 @Provider
 @ApplicationScoped
-public class GenericExceptionMapper implements ExceptionMapper<Exception> {
+public class GenericMapper implements ExceptionMapper<Exception> {
 
 	@Context
 	private UriInfo uriInfo;

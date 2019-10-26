@@ -10,6 +10,7 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.SharedCacheMode;
 import javax.persistence.ValidationMode;
 import javax.persistence.spi.ClassTransformer;
@@ -31,7 +32,7 @@ import org.eclipse.microprofile.config.Config;
 @Getter
 @Dependent
 @ConfigPrefix("jpa")
-public class PersistenceUnitInfoBean implements PersistenceUnitInfo {
+class PersistenceUnitInfoBean implements PersistenceUnitInfo {
 	private static final String JPA_PROPERTIES = "jpa.properties.";
 
 	@Setter(onParam_ = @ConfigValue(required = false))
@@ -54,9 +55,10 @@ public class PersistenceUnitInfoBean implements PersistenceUnitInfo {
 	private final ClassLoader classLoader = getClass().getClassLoader();
 
 	@Inject
-	private DataSource ds;
-	@Inject
 	private Config config;
+	@Inject
+	@Named("default")
+	private DataSource dataSource;
 
 	@Override
 	public boolean excludeUnlistedClasses() {
@@ -70,12 +72,12 @@ public class PersistenceUnitInfoBean implements PersistenceUnitInfo {
 
 	@Override
 	public DataSource getJtaDataSource() {
-		return this.transactionType == JTA ? this.ds : null;
+		return this.transactionType == JTA ? this.dataSource : null;
 	}
 
 	@Override
 	public DataSource getNonJtaDataSource() {
-		return this.transactionType == RESOURCE_LOCAL ? this.ds : null;
+		return this.transactionType == RESOURCE_LOCAL ? this.dataSource : null;
 	}
 
 	@Override

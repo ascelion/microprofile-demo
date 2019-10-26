@@ -1,4 +1,4 @@
-package ascelion.kalah.boot;
+package ascelion.kalah;
 
 import java.io.File;
 
@@ -7,8 +7,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.se.SeContainer;
-import javax.enterprise.inject.se.SeContainerInitializer;
 import javax.interceptor.Interceptor;
 
 import ascelion.kalah.shared.utils.SLF4JHandler;
@@ -16,6 +14,7 @@ import ascelion.microprofile.config.ConfigValue;
 
 import static java.util.Arrays.stream;
 
+import io.helidon.microprofile.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,14 +33,8 @@ public class Main {
 
 	static private final Logger LOG = LoggerFactory.getLogger(Main.class);
 
-	public static void main(String[] args) throws InterruptedException {
-		final SeContainerInitializer init = SeContainerInitializer.newInstance();
-
-		try (SeContainer container = init.initialize()) {
-			container.select(Main.class)
-					.get()
-					.run();
-		}
+	public static void main(String[] args) {
+		Server.create().start();
 	}
 
 	@ConfigValue("application.name")
@@ -65,9 +58,5 @@ public class Main {
 			Object unused) {
 		//@formatter:on
 		LOG.info("Finishing {}", this.applicationName);
-	}
-
-	void run() throws InterruptedException {
-		Thread.currentThread().join();
 	}
 }

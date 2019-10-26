@@ -3,6 +3,7 @@ package ascelion.kalah.shared.endpoint;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,9 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 
 public interface ViewEntityEndpoint<V> {
 	@AllArgsConstructor
@@ -51,11 +55,11 @@ public interface ViewEntityEndpoint<V> {
 	@GET
 	@Path("{id}")
 	@Produces(APPLICATION_JSON)
-	V get(@PathParam("id") UUID id);
+	V get(@Parameter(name = "id", description = "The entity ID.", schema = @Schema(type = SchemaType.STRING)) @PathParam("id") UUID id);
 
 	@POST
 	@Path("search")
 	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
-	List<V> search(@NotNull Search<V> search);
+	List<V> search(@NotNull @Valid Search<V> search);
 }

@@ -10,7 +10,9 @@ import ascelion.kalah.shared.persistence.EntityRepo;
 import static java.util.stream.Collectors.toList;
 
 import io.leangen.geantyref.GenericTypeReflector;
+import org.eclipse.microprofile.metrics.annotation.Metered;
 
+@Metered
 public abstract class ViewEntityEndpointBase<V, E extends AbstractEntity<E>, R extends EntityRepo<E>>
 		implements ViewEntityEndpoint<V> {
 
