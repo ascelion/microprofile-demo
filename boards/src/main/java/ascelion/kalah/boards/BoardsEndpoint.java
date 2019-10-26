@@ -1,6 +1,5 @@
 package ascelion.kalah.boards;
 
-import java.util.List;
 import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -8,7 +7,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -17,6 +15,7 @@ import javax.ws.rs.core.Response;
 
 import ascelion.kalah.engine.model.Board;
 import ascelion.kalah.players.PlayersEndpoint;
+import ascelion.kalah.shared.endpoint.FullEntityEndpointBase;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
 
@@ -24,17 +23,14 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @Path("boards")
 @ApplicationScoped
-public class BoardsEndpoint {
+public class BoardsEndpoint extends FullEntityEndpointBase<Board, Board, BoardsRepository> {
+	private final PlayersEndpoint players;
 
 	@Inject
-	private BoardsRepository repo;
-	@Inject
-	@RestClient
-	private PlayersEndpoint players;
+	public BoardsEndpoint(BoardsRepository repo, @RestClient PlayersEndpoint players) {
+		super(repo);
 
-	@GET
-	public List<Board> getAll() {
-		return this.repo.findAll();
+		this.players = players;
 	}
 
 	@POST

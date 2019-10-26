@@ -3,6 +3,13 @@ config_ordinal: 125
 
 jersey:
   tracing:
-    type: ON_DEMAND
+    type: ALL
     threshold: VERBOSE
 
+jpa:
+  properties:
+    eclipselink:
+      logging:
+        level: FINE
+        parameters: true
+        level.sql: FINE

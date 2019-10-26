@@ -1,4 +1,4 @@
-package ascelion.kalah.shared.config;
+package ascelion.kalah.shared.persistence;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
@@ -61,6 +61,7 @@ public class PersistenceBean {
 		return provider.createContainerEntityManagerFactory(this.pui, emptyMap());
 	}
 
+	@SuppressWarnings("unchecked")
 	@PostConstruct
 	private void postConstruct() {
 		final String className = this.pui.getPersistenceProviderClassName();
@@ -69,7 +70,7 @@ public class PersistenceBean {
 			try {
 				this.providerType = ((Class<? extends PersistenceProvider>) this.pui.getClassLoader().loadClass(className));
 			} catch (final ClassNotFoundException e) {
-				LOG.warn("Cannot load {}, using the default persistence provider", className);
+				LOG.warn("Cannot load {}, using the default persistence provider, if any", className);
 			}
 		}
 	}

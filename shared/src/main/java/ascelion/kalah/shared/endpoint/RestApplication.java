@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -12,7 +12,7 @@ import javax.ws.rs.core.Application;
 import lombok.Getter;
 import org.glassfish.jersey.server.ServerProperties;
 
-@Dependent
+@ApplicationScoped
 @ApplicationPath("/rest")
 public class RestApplication extends Application {
 	@Inject

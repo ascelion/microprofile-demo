@@ -1,4 +1,4 @@
-package ascelion.kalah.shared.config;
+package ascelion.kalah.shared.persistence;
 
 import java.io.IOException;
 import java.net.URL;
@@ -105,6 +105,8 @@ public class PersistenceUnitInfoBean implements PersistenceUnitInfo {
 
 				this.jarFileUrls.add(new URL(pd.substring(0, pd.length() - this.persistenceXML.length())));
 			}
+
+			this.jarFileUrls.remove(this.persistenceUnitRootUrl);
 		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}

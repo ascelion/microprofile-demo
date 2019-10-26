@@ -16,11 +16,11 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public abstract class AbstractEntity<E extends AbstractEntity<E>> {
+public abstract class AbstractEntity<E extends AbstractEntity<E>> extends POJO {
 
 	@Id
 	@GeneratedValue
-	@Column(nullable = false, updatable = false, unique = true)
+	@Column(insertable = false, nullable = false, updatable = false, unique = true)
 	private UUID id;
 
 	@Override

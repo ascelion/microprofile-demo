@@ -22,6 +22,8 @@
 	</appender>
  
 	<logger name="ascelion" level="ALL" />
+
+	<logger name="org.hibernate" level="ALL" />
 	<logger name="org.glassfish.jersey" level="INFO" />
 	<logger name="com.zaxxer.hikari" level="INFO" />
 	<logger name="com.zaxxer.hikari.HikariConfig" level="DEBUG" />

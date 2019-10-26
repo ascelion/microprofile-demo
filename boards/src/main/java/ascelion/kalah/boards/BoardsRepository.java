@@ -1,12 +1,10 @@
 package ascelion.kalah.boards;
 
-import java.util.UUID;
-
 import ascelion.kalah.engine.model.Board;
+import ascelion.kalah.shared.persistence.EntityRepo;
 
-import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 
 @Repository
-public interface BoardsRepository extends EntityRepository<Board, UUID> {
+public interface BoardsRepository extends EntityRepo<Board> {
 }

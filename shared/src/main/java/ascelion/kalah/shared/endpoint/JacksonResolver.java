@@ -1,14 +1,15 @@
 package ascelion.kalah.shared.endpoint;
 
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
+import ascelion.kalah.shared.utils.SingletonBean;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Provider
-@Dependent
+@SingletonBean
 public class JacksonResolver implements ContextResolver<ObjectMapper> {
 	@Inject
 	private ObjectMapper om;

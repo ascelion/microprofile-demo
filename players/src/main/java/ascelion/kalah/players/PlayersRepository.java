@@ -1,10 +1,9 @@
 package ascelion.kalah.players;
 
-import java.util.UUID;
+import ascelion.kalah.shared.persistence.EntityRepo;
 
-import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 
-@Repository
-public interface PlayersRepository extends EntityRepository<Player, UUID> {
+@Repository(forEntity = Player.class)
+public interface PlayersRepository extends EntityRepo<Player> {
 }
