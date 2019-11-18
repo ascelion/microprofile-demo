@@ -1,4 +1,4 @@
-rootProject.name = 'kalah-game'
+rootProject.name = 'microprofile-demo'
 
 include ':boot'
 include ':boards'
@@ -12,6 +12,14 @@ include ':shared'
 
 def renameChildren( ProjectDescriptor desc ) {
 	desc.children.each { child ->
+		File file = new File(child.projectDir, '.artifact')
+	
+		if( file.exists() ) {
+			child.name = "${file.text.trim()}"
+		}
+		else {
+			child.name = "${child.path.substring(1).replace(':', '-')}"
+		}
 
 		child.name = "${child.path.substring(1).replace(':', '-')}"
 

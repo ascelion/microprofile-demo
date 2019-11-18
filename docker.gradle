@@ -51,7 +51,7 @@ docker {
 task dockerBaseJars( type: Copy ) {
 	dependsOn assemble
 
-	from tarTree( "$buildDir/distributions/${project.name}.tar" )
+	from tarTree( "$buildDir/distributions/${project.name}.tgz" )
 	into destination
 	exclude "bin/*.bat"
 	exclude "lib/$rootProject.name-*.jar"
@@ -60,7 +60,7 @@ task dockerBaseJars( type: Copy ) {
 task dockerBaseDist( type: Copy ) {
 	dependsOn assemble
 
-	from tarTree( "$buildDir/distributions/${project.name}.tar" )
+	from tarTree( "$buildDir/distributions/${project.name}.tgz" )
 	into "$destination/lib1"
 	include "lib/$rootProject.name-*.jar"
 

@@ -4,8 +4,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
-import ascelion.microprofile.config.ConfigPrefix;
-import ascelion.microprofile.config.ConfigValue;
+import ascelion.config.api.ConfigPrefix;
+import ascelion.config.api.ConfigValue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

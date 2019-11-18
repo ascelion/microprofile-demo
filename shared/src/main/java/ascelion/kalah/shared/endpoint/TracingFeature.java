@@ -1,6 +1,5 @@
 package ascelion.kalah.shared.endpoint;
 
-import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.spi.CDI;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
@@ -8,7 +7,8 @@ import javax.ws.rs.ext.Provider;
 
 import org.glassfish.jersey.server.ServerProperties;
 
-@Dependent
+//features are not CDI, why?
+//@Dependent
 @Provider
 public class TracingFeature implements Feature {
 

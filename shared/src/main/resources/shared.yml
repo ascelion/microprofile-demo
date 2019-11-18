@@ -15,3 +15,24 @@ javax.sql.DataSource:
       databaseName: ${database.name}
       user: ${database.username}
       password: ${database.password}
+
+security:
+  users:
+    u1:
+      username: guest
+      password: guest
+      roles:
+        - guests
+    u2:
+      username: user
+      password: user
+      roles:
+        - users
+        - guest
+    u3:
+      username: admin
+      password: admin
+      roles:
+        - admins
+        - users
+        - guest

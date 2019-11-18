@@ -5,11 +5,3 @@ jersey:
   tracing:
     type: ALL
     threshold: VERBOSE
-
-jpa:
-  properties:
-    eclipselink:
-      logging:
-        level: FINE
-        parameters: true
-        level.sql: FINE
