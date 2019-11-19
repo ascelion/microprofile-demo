@@ -48,7 +48,7 @@ class PersistenceUnitInfoBean implements PersistenceUnitInfo {
 	private final List<String> managedClassNames = emptyList();
 	private SharedCacheMode sharedCacheMode;
 	private ValidationMode validationMode;
-	@ConfigValue
+	@ConfigValue(required = false)
 	private Properties properties;
 	private String persistenceXMLSchemaVersion;
 	private final ClassLoader classLoader = getClass().getClassLoader();
