@@ -14,3 +14,5 @@ dependencies {
 	implementation project( ':shared' )
 	implementation project( ':boot' )
 }
+
+apply from: rootProject.file( 'publish.gradle' )

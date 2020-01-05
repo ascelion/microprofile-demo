@@ -9,8 +9,8 @@ import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.interceptor.Interceptor;
 
+import ascelion.config.api.ConfigValue;
 import ascelion.kalah.shared.utils.SLF4JHandler;
-import ascelion.microprofile.config.ConfigValue;
 
 import static java.util.Arrays.stream;
 

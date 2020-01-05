@@ -1,16 +1,11 @@
-configurations {
-	lombok
 
-	all {
-		if( name.endsWith( 'ompileOnly') ) {
-			extendsFrom lombok
-		}
-		if( name.endsWith( 'nnotationProcessor') ) {
-			extendsFrom lombok
+plugins.withType( JavaPlugin ) {
+	configurations {
+		all {
+			if( name.endsWith( 'ompileOnly') || name.endsWith( 'nnotationProcessor') ) {
+				project.dependencies.add name, 'org.projectlombok:lombok:1.18.+'
+				project.dependencies.add name, 'org.mapstruct:mapstruct-processor:1.3.1.Final'
+			}
 		}
 	}
-}
-
-dependencies {
-	lombok 'org.projectlombok:lombok:1.18.8'
 }

@@ -18,8 +18,8 @@ import javax.persistence.spi.PersistenceUnitInfo;
 import javax.persistence.spi.PersistenceUnitTransactionType;
 import javax.sql.DataSource;
 
-import ascelion.microprofile.config.ConfigPrefix;
-import ascelion.microprofile.config.ConfigValue;
+import ascelion.config.api.ConfigPrefix;
+import ascelion.config.api.ConfigValue;
 
 import static java.util.Collections.emptyList;
 import static javax.persistence.spi.PersistenceUnitTransactionType.JTA;
@@ -33,8 +33,6 @@ import org.eclipse.microprofile.config.Config;
 @Dependent
 @ConfigPrefix("jpa")
 class PersistenceUnitInfoBean implements PersistenceUnitInfo {
-	private static final String JPA_PROPERTIES = "jpa.properties.";
-
 	@Setter(onParam_ = @ConfigValue(required = false))
 	private String unitName = "default";
 	@Setter(onParam_ = @ConfigValue(required = false))
@@ -50,7 +48,8 @@ class PersistenceUnitInfoBean implements PersistenceUnitInfo {
 	private final List<String> managedClassNames = emptyList();
 	private SharedCacheMode sharedCacheMode;
 	private ValidationMode validationMode;
-	private final Properties properties = new Properties();
+	@ConfigValue
+	private Properties properties;
 	private String persistenceXMLSchemaVersion;
 	private final ClassLoader classLoader = getClass().getClassLoader();
 
@@ -91,12 +90,6 @@ class PersistenceUnitInfoBean implements PersistenceUnitInfo {
 
 	@PostConstruct
 	private void postConstruct() {
-		for (final String name : this.config.getPropertyNames()) {
-			if (name.startsWith(JPA_PROPERTIES)) {
-				this.properties.put(name.substring(JPA_PROPERTIES.length()), this.config.getValue(name, String.class));
-			}
-		}
-
 		this.persistenceUnitRootUrl = PersistenceUnitInfoBean.class.getProtectionDomain().getCodeSource().getLocation();
 
 		try {

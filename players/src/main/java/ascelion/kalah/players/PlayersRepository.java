@@ -4,6 +4,6 @@ import ascelion.kalah.shared.persistence.EntityRepo;
 
 import org.apache.deltaspike.data.api.Repository;
 
-@Repository(forEntity = Player.class)
-public interface PlayersRepository extends EntityRepo<Player> {
+@Repository(forEntity = PlayerEntity.class)
+public interface PlayersRepository extends EntityRepo<PlayerEntity> {
 }

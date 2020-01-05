@@ -7,11 +7,10 @@ dependencies {
 
 	runtimeOnly 'io.helidon.microprofile.bundles:helidon-microprofile-3.1'
 
-	runtimeOnly 'ascelion.mp-config:mp-config-ext-cdi'
-	runtimeOnly 'ascelion.mp-config:mp-config-ext-yml'
-
-	runtimeOnly 'ascelion.flywaydb:flywaydb-ext-cdi'
-	runtimeOnly 'ascelion.flywaydb:flywaydb-ext-util6'
+	runtimeOnly 'ascelion.config:config-tree-cdi'
+	runtimeOnly 'ascelion.config:config-tree-microprofile'
+	runtimeOnly 'ascelion.flywaydb:flyway-ext-cdi'
+	runtimeOnly 'ascelion.flywaydb:flyway-ext-util6'
 
 	runtimeOnly 'org.glassfish.jersey.ext:jersey-bean-validation'
 

@@ -2,8 +2,8 @@ package ascelion.kalah.shared.endpoint;
 
 import javax.enterprise.context.Dependent;
 
-import ascelion.microprofile.config.ConfigPrefix;
-import ascelion.microprofile.config.ConfigValue;
+import ascelion.config.api.ConfigPrefix;
+import ascelion.config.api.ConfigValue;
 
 import lombok.Getter;
 import lombok.Setter;

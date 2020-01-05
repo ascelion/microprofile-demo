@@ -16,7 +16,7 @@ dependencies {
 
 eclipse {
 	project {
-		name = 'ascelion.poc.kalah-game-build'
+		name = 'ascelion.microprofile-demo-build'
 	}
 	classpath {
 		file {

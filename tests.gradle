@@ -1,0 +1,47 @@
+
+subprojects {
+	plugins.withType( JavaPlugin ) {
+		tasks.withType( Test ) {
+			// testLogging.showStandardStreams = true
+			// testLogging.exceptionFormat = 'full'
+
+			useJUnitPlatform()
+		}
+
+		configurations {
+			tests
+		}
+		dependencies {
+			tests sourceSets.test.output
+		}
+
+		dependencies {
+			testImplementation platform( 'org.junit:junit-bom:5.5.2' )
+
+			constraints {
+				testImplementation 'org.jboss.weld:weld-junit5:2.0.1.Final'
+				testImplementation 'org.hamcrest:hamcrest:2.2'
+			}
+
+			testImplementation 'org.hamcrest:hamcrest'
+
+			testImplementation 'org.junit.jupiter:junit-jupiter-api'
+			testImplementation 'org.junit.jupiter:junit-jupiter-params'
+
+			testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+			testRuntimeOnly 'ch.qos.logback:logback-classic'
+		}
+	}
+}
+
+task testReport(type: TestReport) { task ->
+	destinationDir = file("$buildDir/reports/tests")
+
+	subprojects {
+		tasks.withType(Test) {
+			task.reportOn it
+		}
+	}
+}
+
+check.dependsOn testReport

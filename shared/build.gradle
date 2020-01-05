@@ -5,6 +5,10 @@ dependencies {
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 	implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider'
 
+	implementation 'io.helidon.security.integration:helidon-security-integration-jersey'
+	implementation 'io.helidon.security.providers:helidon-security-providers-http-auth'
+	implementation 'io.helidon.security.providers:helidon-security-providers-jwt'
+
 	runtimeOnly 'com.fasterxml.jackson.module:jackson-module-parameter-names'
 	runtimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
 	runtimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
@@ -14,19 +18,18 @@ dependencies {
 
 	compileOnly 'org.glassfish.jersey.core:jersey-server'
 
-	api 'ascelion.flywaydb:flywaydb-ext-api'
-	runtimeOnly 'ascelion.flywaydb:flywaydb-ext-cdi'
-	runtimeOnly 'ascelion.flywaydb:flywaydb-ext-util6'
+	api 'ascelion.flywaydb:flyway-ext-api'
+	api 'org.mapstruct:mapstruct'
 
-	runtimeOnly 'ascelion.mp-config:mp-config-ext-cdi'
-	runtimeOnly 'ascelion.mp-config:mp-config-ext-yml'
+	runtimeOnly 'ascelion.flywaydb:flyway-ext-cdi'
+	runtimeOnly 'ascelion.flywaydb:flyway-ext-util6'
+	runtimeOnly 'ascelion.config:config-tree-cdi'
 
-//	implementation 'com.zaxxer:HikariCP'
 	implementation 'org.flywaydb:flyway-core'
 
 	implementation 'io.leangen.geantyref:geantyref'
 
-	testImplementation 'ascelion.mp-config:mp-config-ext-cdi'
+	testImplementation 'ascelion.config:config-tree-cdi'
 	testImplementation 'org.jboss.weld:weld-junit4'
 	testImplementation 'io.smallrye:smallrye-config'
 }
