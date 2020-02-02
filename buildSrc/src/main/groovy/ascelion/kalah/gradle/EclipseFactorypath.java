@@ -25,9 +25,9 @@ public class EclipseFactorypath extends XmlPersistableConfigurationObject {
 
 	@Override
 	protected void load(Node xml) {
-//		for (final Node child : getChildren(xml, "factorypathentry")) {
-//			this.entries.add(new EclipseFactorypathEntry(child));
-//		}
+		for (final Node child : getChildren(xml, "factorypathentry")) {
+			this.entries.add(new EclipseFactorypathEntry(child));
+		}
 	}
 
 	@Override

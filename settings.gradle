@@ -1,11 +1,13 @@
 rootProject.name = 'microprofile-demo'
 
 include ':boot'
-include ':boards'
-include ':engine'
+//include ':boards'
+//include ':boards-api'
+//include ':engine'
 include ':players'
 include ':players-api'
 include ':shared'
+include ':shared-api'
 
 //include ':payara:boards'
 //include ':payara:players'

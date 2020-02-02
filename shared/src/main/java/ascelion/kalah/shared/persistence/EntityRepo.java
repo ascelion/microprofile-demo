@@ -1,21 +1,28 @@
 package ascelion.kalah.shared.persistence;
 
+import static io.leangen.geantyref.GenericTypeReflector.getTypeParameter;
+import static java.lang.String.format;
+
+import ascelion.kalah.shared.PageInfo;
+import ascelion.kalah.shared.SortInfo;
+import ascelion.kalah.shared.model.AbstractEntity;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 
-import ascelion.kalah.shared.model.AbstractEntity;
-
-import static io.leangen.geantyref.GenericTypeReflector.getTypeParameter;
-import static java.lang.String.format;
-
 import org.apache.deltaspike.data.api.FullEntityRepository;
-import org.apache.deltaspike.data.api.criteria.Criteria;
 
-public interface EntityRepo<E extends AbstractEntity<E>> extends FullEntityRepository<E, UUID> {
+public interface EntityRepo<E extends AbstractEntity> extends FullEntityRepository<E, UUID> {
 	@SuppressWarnings("unchecked")
 	default Class<E> entityClass() {
 		return (Class<E>) getTypeParameter(getClass(), EntityRepo.class.getTypeParameters()[0]);
@@ -36,23 +43,36 @@ public interface EntityRepo<E extends AbstractEntity<E>> extends FullEntityRepos
 				});
 	}
 
-	default Stream<E> findAll(List<String> sort, Integer page, int size) {
-		final Criteria<E, E> c = criteria();
+	default Path<?> getPath(String path) {
+		return getPath(path, getCriteriaBuilder().createQuery().from(entityType()));
+	}
 
-		if (sort != null) {
-			for (final String s : sort) {
-				c.orderAsc(entityType().getSingularAttribute(s));
-			}
+	default Path<?> getPath(String path, Path<?> base) {
+		final String[] items = path.split("\\.");
+
+		for (final String item : items) {
+			base = base.get(item);
 		}
 
-		final List<E> results = page != null
-				? c.createQuery().setFirstResult(page * size).setMaxResults(size).getResultList()
-				: c.getResultList();
-
-		return results.stream();
+		return base;
 	}
 
-	default Stream<E> findAll(E example, String[] sort, Integer page, int size, boolean any) {
+	default Stream<E> findAll(PageInfo page, List<SortInfo> sort) {
+		final CriteriaBuilder cb = getCriteriaBuilder();
+		final CriteriaQuery<E> cq = cb.createQuery(entityClass());
+		final Root<E> root = cq.from(entityType());
+
+		cq.select(root);
+		cq.orderBy(sort.stream()
+				.map(s -> JPADirection.orderBy(cb, getPath(s.path, root), s.direction))
+				.toArray(Order[]::new));
+
+		return page.paginate(entityManager().createQuery(cq)).getResultStream();
+	}
+
+	default Stream<E> findAll(E probe, PageInfo page, List<SortInfo> sort) {
 		return Stream.empty();
 	}
+
+	EntityManager entityManager();
 }

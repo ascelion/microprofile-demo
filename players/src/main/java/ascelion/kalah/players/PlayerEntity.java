@@ -7,18 +7,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "players")
-@NoArgsConstructor
-@SuperBuilder
-public class PlayerEntity extends AbstractEntity<PlayerEntity> {
+@Getter
+@Setter
+public class PlayerEntity extends AbstractEntity {
 
-	@Getter
-	@Setter
 	@Min(0)
 	private int score;
 

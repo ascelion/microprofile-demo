@@ -7,12 +7,14 @@ import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.plugins.ide.eclipse.GenerateEclipseProject
 import org.gradle.plugins.ide.eclipse.model.EclipseModel
-import org.gradle.plugins.ide.eclipse.model.SourceFolder
 
 class ExtendProjectPlugin implements Plugin<Project> {
 
 	@Override
 	void apply(Project project) {
+		project.apply( plugin: 'lifecycle-base' )
+		project.apply( plugin: 'eclipse' )
+
 		project.metaClass.stringProperty = { String name, String defVal ->
 			project.ext.properties.getOrDefault( name, defVal )
 		}
@@ -36,13 +38,14 @@ class ExtendProjectPlugin implements Plugin<Project> {
 		}
 
 		project.plugins.withType(JavaPlugin) {
+			TaskProvider<EclipseFormatterTask> fmt = project.tasks.register("eclipseFormatter", EclipseFormatterTask)
 			TaskProvider<EclipseFactorypathTask> efp = project.tasks.register("eclipseFactorypath", EclipseFactorypathTask)
 
 			efp.configure(new Action<EclipseFactorypathTask>() {
 						@Override
 						public void execute(EclipseFactorypathTask t) {
-							t.setInputFile(project.file('.factorypath'))
-							t.setOutputFile(project.file('.factorypath'))
+							t.setInputFile(project.file(".factorypath"))
+							t.setOutputFile(project.file(".factorypath"))
 						}
 					})
 
@@ -58,33 +61,12 @@ class ExtendProjectPlugin implements Plugin<Project> {
 			project.tasks.withType(GenerateEclipseProject).all {
 				it.dependsOn efp
 				it.dependsOn apt
-			}
-			project.tasks.all {
-				if( name == 'nothing' ) {
-					it.dependsOn efp
-					it.dependsOn apt
-				}
+				it.dependsOn fmt
 			}
 
 			EclipseModel eclipse = project.extensions.getByType(EclipseModel)
 
-			eclipse.classpath {
-				file.beforeMerged { cp ->
-					sourceSets.all { set ->
-						def cfg = project.configurations.getByName( set.annotationProcessorConfigurationName )
-
-						if( cfg.dependencies.size() > 0 ) {
-							def src = project.file("${project.buildDir}/generated/sources/annotationProcessor/java/${set.name}")
-
-							if( src.exists() ) {
-								def dst = set.output.classesDirs.first()
-
-								cp.entries.add( new SourceFolder(project.relativePath(src), project.relativePath(dst)) )
-							}
-						}
-					}
-				}
-			}
+			eclipse.synchronizationTasks(efp, apt, fmt)
 		}
 	}
 }

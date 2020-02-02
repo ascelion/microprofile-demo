@@ -1,5 +1,8 @@
 package ascelion.kalah.shared.model;
 
+import ascelion.kalah.shared.POJO;
+import ascelion.kalah.shared.validation.ValidateColumns;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,13 +13,16 @@ import javax.persistence.MappedSuperclass;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @Getter
-@NoArgsConstructor
+@Setter
 @SuperBuilder
-public abstract class AbstractEntity<E extends AbstractEntity<E>> extends POJO {
+@NoArgsConstructor
+@ValidateColumns
+public abstract class AbstractEntity extends POJO {
 
 	@Id
 	@GeneratedValue
@@ -40,7 +46,7 @@ public abstract class AbstractEntity<E extends AbstractEntity<E>> extends POJO {
 			return false;
 		}
 
-		final AbstractEntity<?> that = (AbstractEntity<?>) obj;
+		final AbstractEntity that = (AbstractEntity) obj;
 
 		return Objects.equals(this.id, that.id);
 	}

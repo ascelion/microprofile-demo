@@ -1,5 +1,13 @@
 package ascelion.kalah.boards;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+import ascelion.kalah.engine.core.TurnEngine;
+import ascelion.kalah.engine.model.Board;
+import ascelion.kalah.players.PlayersEndpoint;
+import ascelion.kalah.shared.endpoint.ViewEntityEndpointBase;
+
 import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,14 +25,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-
-import ascelion.kalah.engine.core.TurnEngine;
-import ascelion.kalah.engine.model.Board;
-import ascelion.kalah.players.PlayersEndpoint;
-import ascelion.kalah.shared.endpoint.ViewEntityEndpointBase;
-
-import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -50,7 +50,7 @@ public class BoardsEndpoint extends ViewEntityEndpointBase<Board, Board, BoardsR
 	@Valid
 	public Board create(@Parameter(name = "userId", description = "The user ID.", schema = @Schema(type = SchemaType.STRING)) @FormParam("userId") @NotNull UUID userId) {
 		// verify user
-		this.players.get(userId);
+        // this.players.get(Get);
 
 		final Board board = Board.builder()
 				.southId(userId)
@@ -69,7 +69,7 @@ public class BoardsEndpoint extends ViewEntityEndpointBase<Board, Board, BoardsR
 			@Parameter(name = "boardId", description = "The board ID.", schema = @Schema(type = SchemaType.STRING)) @PathParam("boardId") @NotNull UUID boardId,
 			@Parameter(name = "userId", description = "The user ID.", schema = @Schema(type = SchemaType.STRING)) @FormParam("userId") @NotNull UUID userId) {
 		// verify user
-		this.players.get(userId);
+        // this.players.get(userId);
 
 		final Board board = this.repo.get(boardId);
 

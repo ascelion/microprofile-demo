@@ -1,10 +1,14 @@
 
 plugins.withType( JavaPlugin ) {
 	configurations {
-		all {
-			if( name.endsWith( 'ompileOnly') || name.endsWith( 'nnotationProcessor') ) {
-				project.dependencies.add name, 'org.projectlombok:lombok:1.18.+'
-				project.dependencies.add name, 'org.mapstruct:mapstruct-processor:1.3.1.Final'
+		all { cfg ->
+			if( cfg.name.endsWith( 'ompileOnly') ) {
+				project.dependencies.add cfg.name, 'org.projectlombok:lombok:1.18.+'
+			}
+			if( cfg.name.endsWith( 'nnotationProcessor') ) {
+				project.dependencies.add cfg.name, 'org.projectlombok:lombok:1.18.+'
+				project.dependencies.add cfg.name, 'org.mapstruct:mapstruct-processor:1.3.1.Final'
+				project.dependencies.add cfg.name, 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
 			}
 		}
 	}

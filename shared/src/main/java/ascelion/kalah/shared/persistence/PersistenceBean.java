@@ -1,6 +1,9 @@
 package ascelion.kalah.shared.persistence;
 
-import javax.enterprise.context.Dependent;
+import static java.util.Collections.emptyMap;
+import static javax.persistence.spi.PersistenceProviderResolverHolder.getPersistenceProviderResolver;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -12,15 +15,13 @@ import javax.persistence.spi.PersistenceUnitInfo;
 import javax.persistence.spi.PersistenceUnitTransactionType;
 import javax.sql.DataSource;
 
-import static java.util.Collections.emptyMap;
-import static javax.persistence.spi.PersistenceProviderResolverHolder.getPersistenceProviderResolver;
-
-import org.flywaydb.core.Flyway;
-import org.flywaydb.core.api.configuration.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Dependent
+import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.configuration.Configuration;
+
+@ApplicationScoped
 class PersistenceBean {
 
 	static private final Logger LOG = LoggerFactory.getLogger(PersistenceBean.class);
@@ -55,6 +56,7 @@ class PersistenceBean {
 	}
 
 	@Produces
+	@ApplicationScoped
 	Configuration configuration() {
 		return Flyway.configure()
 				.dataSource(this.dataSource)
@@ -62,6 +64,7 @@ class PersistenceBean {
 	}
 
 	@Produces
+	@ApplicationScoped
 	EntityManagerFactory entityManagerFactory() {
 		return getPersistenceProviderResolver()
 				.getPersistenceProviders()

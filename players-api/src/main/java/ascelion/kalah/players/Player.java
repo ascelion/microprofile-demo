@@ -1,7 +1,14 @@
 package ascelion.kalah.players;
 
-import ascelion.kalah.shared.model.POJO;
+import ascelion.kalah.shared.AbstractView;
 
-public class Player extends POJO {
-	public int score;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@SuperBuilder
+@NoArgsConstructor
+@Getter
+public class Player extends AbstractView {
+	private int score;
 }

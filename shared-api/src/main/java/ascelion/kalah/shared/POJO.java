@@ -1,10 +1,10 @@
-package ascelion.kalah.shared.model;
+package ascelion.kalah.shared;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import lombok.AccessLevel;
+
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -16,6 +16,6 @@ import lombok.experimental.SuperBuilder;
 		setterVisibility = Visibility.NONE)
 @JsonInclude(content = Include.NON_NULL, value = Include.NON_NULL)
 @SuperBuilder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public abstract class POJO {
 }

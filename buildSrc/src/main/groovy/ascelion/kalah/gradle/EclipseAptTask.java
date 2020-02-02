@@ -12,23 +12,30 @@ public class EclipseAptTask extends PropertiesGeneratorTask<EclipseApt> {
 
 	@Override
 	protected void configure(EclipseApt apt) {
+		apt.setEnabled(true);
+		apt.setReconcileEnabled(true);
+
 		getProject().getExtensions().getByType(SourceSetContainer.class)
 				.all(set -> setGeneratedOutput(apt, set));
-	}
-
-	private void setGeneratedOutput(EclipseApt apt, SourceSet set) {
-		switch (set.getName()) {
-			case "main":
-				apt.setGenSrcDir(getProject().relativePath(set.getOutput().getGeneratedSourcesDirs().getSingleFile()));
-			break;
-			case "test":
-				apt.setGenTestSrcDir(getProject().relativePath(set.getOutput().getGeneratedSourcesDirs().getSingleFile()));
-			break;
-		}
 	}
 
 	@Override
 	protected EclipseApt create() {
 		return new EclipseApt(getTransformer());
+	}
+
+	private void setGeneratedOutput(EclipseApt apt, SourceSet set) {
+		final String gen = getProject().relativePath(set.getOutput().getGeneratedSourcesDirs().getSingleFile());
+
+		set.java(sds -> sds.srcDir(gen));
+
+		switch (set.getName()) {
+			case "main":
+				apt.setGenSrcDir(gen);
+			break;
+			case "test":
+				apt.setGenTestSrcDir(gen);
+			break;
+		}
 	}
 }

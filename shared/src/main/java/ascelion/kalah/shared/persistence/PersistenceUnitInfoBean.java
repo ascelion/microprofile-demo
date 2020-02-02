@@ -1,5 +1,12 @@
 package ascelion.kalah.shared.persistence;
 
+import static java.util.Collections.emptyList;
+import static javax.persistence.spi.PersistenceUnitTransactionType.JTA;
+import static javax.persistence.spi.PersistenceUnitTransactionType.RESOURCE_LOCAL;
+
+import ascelion.config.api.ConfigPrefix;
+import ascelion.config.api.ConfigValue;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,7 +15,7 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.SharedCacheMode;
@@ -18,19 +25,12 @@ import javax.persistence.spi.PersistenceUnitInfo;
 import javax.persistence.spi.PersistenceUnitTransactionType;
 import javax.sql.DataSource;
 
-import ascelion.config.api.ConfigPrefix;
-import ascelion.config.api.ConfigValue;
-
-import static java.util.Collections.emptyList;
-import static javax.persistence.spi.PersistenceUnitTransactionType.JTA;
-import static javax.persistence.spi.PersistenceUnitTransactionType.RESOURCE_LOCAL;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.eclipse.microprofile.config.Config;
 
 @Getter
-@Dependent
+@ApplicationScoped
 @ConfigPrefix("jpa")
 class PersistenceUnitInfoBean implements PersistenceUnitInfo {
 	@Setter(onParam_ = @ConfigValue(required = false))

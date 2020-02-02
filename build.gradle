@@ -6,7 +6,7 @@ buildscript {
 	}
 	dependencies {
 		classpath 'org.galaxx.gradle:jandex:1.0.2'
-		classpath 'org.openapitools:openapi-generator-gradle-plugin:4.2.+'
+//		classpath 'org.openapitools:openapi-generator-gradle-plugin:4.2.+'
 		classpath 'pl.allegro.tech.build:axion-release-plugin:1.10.+'
 	}
 }
@@ -34,15 +34,13 @@ allprojects {
 	}
 
 	apply plugin: 'extend-project'
-	apply plugin: 'lifecycle-base'
-	apply plugin: 'eclipse'
 
 	clean {
 		delete 'bin', 'target', '*.log'
 	}
 
 	cleanEclipse {
-		delete '.settings', '.classpath', '.project'
+		delete '.settings', '.classpath', '.project', '.factorypath'
 	}
 
 	defaultTasks 'clean', 'build'
@@ -58,7 +56,7 @@ subprojects {
 	}
 
 	plugins.withType( JavaPlugin ) {
-		// project.apply plugin: 'org.galaxx.gradle.jandex'
+		 project.apply plugin: 'org.galaxx.gradle.jandex'
 
 		sourceCompatibility = '8'
 		targetCompatibility = '8'
@@ -67,7 +65,7 @@ subprojects {
 
 		sourceSets {
 			all {
-				output.resourcesDir = output.classesDirs[0]
+				output.resourcesDir = output.classesDirs.singleFile
 			}
 		}
 
@@ -75,13 +73,13 @@ subprojects {
 			implementation platform( 'org.apache.deltaspike.distribution:distributions-bom:1.9.1' )
 			implementation platform( 'io.smallrye:smallrye-bom:3.0.2' )
 
-			implementation platform( 'ascelion.flywaydb:flyway-ext:1.0.3-SNAPSHOT' )
+			implementation platform( 'ascelion.flywaydb:flyway-ext:1.0.3' )
 			implementation platform( 'ascelion.config:config-tree:0.1.0-SNAPSHOT' )
 
 			// https://github.com/oracle/helidon/issues/1121
 			// https://github.com/pa314159/helidon/tree/issues/1121
-			implementation platform( 'io.helidon.microprofile.bundles:helidon-microprofile-3.1:1.4.0' )
-			// implementation platform( 'org.glassfish.jersey:jersey-bom:2.29.1' )
+			implementation platform( 'io.helidon.microprofile.bundles:helidon-microprofile-3.1:1.4.1' )
+			implementation platform( 'org.glassfish.jersey:jersey-bom:2.30' )
 
 			constraints {
 				implementation 'jakarta.enterprise:jakarta.enterprise.cdi-api:2.0.2'
@@ -91,7 +89,8 @@ subprojects {
 				implementation 'jakarta.transaction:jakarta.transaction-api:1.3.3'
 				implementation 'jakarta.ws.rs:jakarta.ws.rs-api:2.1.6'
 				implementation 'jakarta.json.bind:jakarta.json.bind-api:1.0.2'
-
+				implementation 'org.eclipse.microprofile.metrics:microprofile-metrics-api:2.2'
+				
 				implementation 'org.slf4j:slf4j-api:1.7.28'
 
 				implementation 'ch.qos.logback:logback-classic:1.2.3'
@@ -112,23 +111,24 @@ subprojects {
 				implementation 'org.mapstruct:mapstruct:1.3.1.Final'
 			}
 
-			compileOnly 'jakarta.annotation:jakarta.annotation-api'
-			compileOnly 'jakarta.enterprise:jakarta.enterprise.cdi-api'
-			compileOnly 'jakarta.persistence:jakarta.persistence-api'
-			compileOnly 'jakarta.validation:jakarta.validation-api'
-			compileOnly 'jakarta.ws.rs:jakarta.ws.rs-api'
-
-			compileOnly 'org.eclipse.microprofile.config:microprofile-config-api'
-			compileOnly 'org.eclipse.microprofile.rest.client:microprofile-rest-client-api'
-			compileOnly 'org.eclipse.microprofile.fault-tolerance:microprofile-fault-tolerance-api'
-			compileOnly 'org.eclipse.microprofile.health:microprofile-health-api'
-			compileOnly 'org.eclipse.microprofile.openapi:microprofile-openapi-api'
-			compileOnly 'org.eclipse.microprofile.metrics:microprofile-metrics-api:2.1.0'
-
+//			compileOnly 'jakarta.annotation:jakarta.annotation-api'
+//			compileOnly 'jakarta.enterprise:jakarta.enterprise.cdi-api'
+//			compileOnly 'jakarta.persistence:jakarta.persistence-api'
+//			compileOnly 'jakarta.validation:jakarta.validation-api'
+//			compileOnly 'jakarta.ws.rs:jakarta.ws.rs-api'
+//
+//			compileOnly 'org.eclipse.microprofile.config:microprofile-config-api'
+//			compileOnly 'org.eclipse.microprofile.rest.client:microprofile-rest-client-api'
+//			compileOnly 'org.eclipse.microprofile.fault-tolerance:microprofile-fault-tolerance-api'
+//			compileOnly 'org.eclipse.microprofile.health:microprofile-health-api'
+//			compileOnly 'org.eclipse.microprofile.openapi:microprofile-openapi-api'
+//			compileOnly 'org.eclipse.microprofile.metrics:microprofile-metrics-api:2.1.0'
+//
 			compileOnly 'ascelion.config:config-tree-api'
-
+//
 			runtimeOnly 'org.postgresql:postgresql'
-
+//
+			implementation 'org.apache.commons:commons-lang3'
 			implementation 'org.slf4j:slf4j-api'
 			runtimeOnly 'ch.qos.logback:logback-classic'
 		}
